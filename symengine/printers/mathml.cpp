@@ -320,6 +320,41 @@ void MathMLPrinter::bvisit(const Derivative &x)
     s << "</apply>";
 }
 
+
+void MathMLPrinter::bvisit(const Sum &x)
+{
+    s << "<apply>"
+            "<sum/>"
+            "<bvar>";
+    x.get_index()->accept(*this);
+    s <<    "</bvar>"
+            "<lowlimit>";
+    x.get_from()->accept(*this);
+    s <<    "</lowlimit>"
+            "<uplimit>";
+    x.get_to()->accept(*this);
+    s <<    "</uplimit>";
+    x.get_function()->accept(*this);
+    s << "</apply>";
+}
+
+void MathMLPrinter::bvisit(const Prod &x)
+{
+    s << "<apply>"
+            "<product/>"
+            "<bvar>";
+    x.get_index()->accept(*this);
+    s <<    "</bvar>"
+            "<lowlimit>";
+    x.get_from()->accept(*this);
+    s <<    "</lowlimit>"
+            "<uplimit>";
+    x.get_to()->accept(*this);
+    s <<    "</uplimit>";
+    x.get_function()->accept(*this);
+    s << "</apply>";
+}
+
 std::string MathMLPrinter::apply(const Basic &b)
 {
     b.accept(*this);

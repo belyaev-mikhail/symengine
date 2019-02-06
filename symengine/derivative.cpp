@@ -35,6 +35,9 @@ public:
     DIFF0(UnivariateSeries)
     DIFF0(Max)
     DIFF0(Min)
+
+    DIFF0(Sum) // Implement??
+    DIFF0(Prod) // Implement??
 #endif
 
     static RCP<const Basic> diff(const Number &self, const RCP<const Symbol> &x)

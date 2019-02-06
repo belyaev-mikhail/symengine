@@ -45,6 +45,9 @@ public:
     void bvisit(const Unequality &x);
     void bvisit(const LessThan &x);
     void bvisit(const StrictLessThan &x);
+    void bvisit(const Sum &x);
+    void bvisit(const Prod &x);
+
 #ifdef HAVE_SYMENGINE_MPFR
     void bvisit(const RealMPFR &x);
 #endif

@@ -186,6 +186,9 @@ public:
 #endif
     void bvisit(const NumberWrapper &x);
 
+    void bvisit(const Sum &x);
+    void bvisit(const Prod &x);
+
     std::string apply(const RCP<const Basic> &b);
     std::string apply(const vec_basic &v);
     std::string apply(const Basic &b);

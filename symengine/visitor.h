@@ -24,6 +24,8 @@
 #include <symengine/nan.h>
 #include <symengine/matrix.h>
 #include <symengine/symengine_casts.h>
+#include <symengine/summation.h>
+#include <symengine/product.h>
 
 namespace SymEngine
 {

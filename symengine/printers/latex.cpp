@@ -462,6 +462,42 @@ void LatexPrinter::bvisit(const Abs &x)
     str_ = o.str();
 }
 
+
+void LatexPrinter::bvisit(const Sum &x)
+{
+    std::ostringstream o;
+    o << "\\sum"
+      << "_{"
+      << apply(x.get_index())
+      << "="
+      << apply(x.get_from())
+      << "}"
+      << "^{"
+      << apply(x.get_to())
+      << "}"
+      << " "
+      << apply(x.get_function());
+    str_ = o.str();
+}
+
+void LatexPrinter::bvisit(const Prod &x)
+{
+    std::ostringstream o;
+    o << "\\prod"
+      << "_{"
+      << apply(x.get_index())
+      << "="
+      << apply(x.get_from())
+      << "}"
+      << "^{"
+      << apply(x.get_to())
+      << "}"
+      << " "
+      << apply(x.get_function());
+    str_ = o.str();
+}
+
+
 std::string LatexPrinter::parenthesize(const std::string &expr)
 {
     return "\\left(" + expr + "\\right)";

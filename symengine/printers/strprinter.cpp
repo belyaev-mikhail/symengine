@@ -978,6 +978,28 @@ void StrPrinter::bvisit(const MExprPoly &x)
     str_ = s.str();
 }
 
+void StrPrinter::bvisit(const Sum &x)
+{
+    std::ostringstream o;
+    o << "Sum(" << this->apply(x.get_index())
+      << "=[" << this->apply(x.get_from())
+      << ".." << this->apply(x.get_to())
+      << "]{" << this->apply(x.get_function())
+      << "}";
+    str_ = o.str();
+}
+
+void StrPrinter::bvisit(const Prod &x)
+{
+    std::ostringstream o;
+    o << "Prod(" << this->apply(x.get_index())
+      << "=[" << this->apply(x.get_from())
+      << ".." << this->apply(x.get_to())
+      << "]{" << this->apply(x.get_function())
+      << "}";
+    str_ = o.str();
+}
+
 std::string StrPrinter::parenthesizeLT(const RCP<const Basic> &x,
                                        PrecedenceEnum precedenceEnum)
 {

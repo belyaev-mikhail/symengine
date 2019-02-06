@@ -47,6 +47,9 @@ public:
     void bvisit(const LessThan &x);
     void bvisit(const StrictLessThan &x);
 
+    void bvisit(const Sum &x);
+    void bvisit(const Prod &x);
+
 private:
     static const std::vector<std::string> names_;
 
