@@ -131,6 +131,23 @@ RCP<const Basic> summation_symbolic(const RCP<const Basic>& f,
                                     const RCP<const Symbol>& index,
                                     const RCP<const Basic>& from,
                                     const RCP<const Basic>& to) {
+
+    static auto two = integer(2);
+
+    // this is a little bit funky
+    if(eq(*f, *index)) {
+        return expand(
+            div(
+                add({
+                       pow(to, two),
+                       to,
+                       neg(pow(from, two)),
+                       from
+                }),
+            two)
+        );
+    }
+
     if(is_a<Mul>(*f)) {
         auto&& fmul = down_cast<const Mul&>(*f);
 

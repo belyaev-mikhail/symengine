@@ -984,7 +984,7 @@ void StrPrinter::bvisit(const Sum &x)
     o << "Sum(" << this->apply(x.get_index())
       << "=[" << this->apply(x.get_from())
       << ".." << this->apply(x.get_to())
-      << "]{" << this->apply(x.get_function())
+      << "]){" << this->apply(x.get_function())
       << "}";
     str_ = o.str();
 }
@@ -995,7 +995,7 @@ void StrPrinter::bvisit(const Prod &x)
     o << "Prod(" << this->apply(x.get_index())
       << "=[" << this->apply(x.get_from())
       << ".." << this->apply(x.get_to())
-      << "]{" << this->apply(x.get_function())
+      << "]){" << this->apply(x.get_function())
       << "}";
     str_ = o.str();
 }
