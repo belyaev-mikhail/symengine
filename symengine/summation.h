@@ -31,11 +31,9 @@ public:
     virtual int compare(const Basic &o) const override;
 
     bool is_canonical(const RCP<const Basic>& f,
-        const RCP<const Basic>& index,
+        const RCP<const Symbol>& index,
         const RCP<const Basic>& from,
-        const RCP<const Basic>& to) const {
-        return true; //rewrite
-    }
+        const RCP<const Basic>& to) const;
 
     virtual vec_basic get_args() const override {
         return { f_, index_, from_, to_ };
@@ -46,12 +44,23 @@ public:
     inline const RCP<const Basic>& get_from() const noexcept { return from_; }
     inline const RCP<const Basic>& get_to() const noexcept { return to_; }
 
+    RCP<const Basic> as_hygenic() const noexcept;
+
 };
 
 RCP<const Basic> summation(const RCP<const Basic>& f,
                            const RCP<const Symbol>& index,
                            const RCP<const Basic>& from,
                            const RCP<const Basic>& to);
+
+template<typename BodyType>
+RCP<const Basic> summation(const std::string& index_name,
+                           BodyType body,
+                           const RCP<const Basic>& from,
+                           const RCP<const Basic>& to) {
+    auto index = dummy(index_name);
+    return summation(body(index), index, from, to);
+}
 
 } // SymEngine
 

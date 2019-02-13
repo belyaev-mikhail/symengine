@@ -242,6 +242,26 @@ public:
         result_ = subs(expr, new_subs_dict);
     }
 
+    void bvisit(const Sum &x)
+    {
+        auto&& index = apply(x.get_index());
+        if (not is_a<Symbol>(*index) and not is_a<Dummy>(*index)) {
+            throw SymEngineException("expected an object of type Symbol");
+        }
+        auto&& function = apply(x.get_function());
+        auto&& from = apply(x.get_from());
+        auto&& to = apply(x.get_to());
+
+        if(index == x.get_index()
+            and function == x.get_function()
+            and from == x.get_from()
+            and to == x.get_to()) {
+           result_ = x.rcp_from_this();
+        } else {
+            result_ = summation(function, rcp_static_cast<const Symbol>(index), from, to);
+        }
+    }
+
     RCP<const Basic> apply(const Basic &x)
     {
         return apply(x.rcp_from_this());

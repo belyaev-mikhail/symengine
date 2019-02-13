@@ -220,11 +220,11 @@ RCP<const Basic> summation_symbolic(const RCP<const Basic>& f,
         }
     }
 
-    return make_rcp<Sum>(f, index, from, to);
+    return null;
 }
 
 
-RCP<const Basic> summation(const RCP<const Basic>& f,
+RCP<const Basic> make_summation(const RCP<const Basic>& f,
                            const RCP<const Symbol>& index,
                            const RCP<const Basic>& from,
                            const RCP<const Basic>& to) {
@@ -267,6 +267,18 @@ RCP<const Basic> summation(const RCP<const Basic>& f,
     return SymEngine::null;
 }
 
+RCP<const Basic> summation(const RCP<const Basic>& f,
+                                const RCP<const Symbol>& index,
+                                const RCP<const Basic>& from,
+                                const RCP<const Basic>& to) {
+    SYMENGINE_ASSERT(not has_symbol(*from, *index));
+    SYMENGINE_ASSERT(not has_symbol(*to, *index));
+
+    auto&& s = make_summation(f, index, from, to);
+    if(s.is_null()) return make_rcp<Sum>(f, index, from, to);
+    else return s;
+}
+
 bool Sum::__eq__(const Basic &o) const {
     if(not is_a<Sum>(o)) return false;
     auto&& that = down_cast<const Sum &>(o);
@@ -295,6 +307,19 @@ hash_t Sum::__hash__() const {
     hash_combine(hash, *from_);
     hash_combine(hash, *to_);
     return hash;
+}
+
+bool Sum::is_canonical(const RCP<const Basic> &f,
+                       const RCP<const Symbol> &index,
+                       const RCP<const Basic> &from,
+                       const RCP<const Basic> &to) const {
+    SYMENGINE_ASSERT(not has_symbol(*from, *index));
+    SYMENGINE_ASSERT(not has_symbol(*to, *index));
+    return make_summation(f, index, from, to) == null;
+}
+
+RCP<const Basic> Sum::as_hygenic() const noexcept {
+    return xreplace({{get_index(), dummy(get_index()->get_name())}});
 }
 
 } /* namespace SymEngine */

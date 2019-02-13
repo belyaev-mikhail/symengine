@@ -36,7 +36,7 @@ inline Expression pow(const Expression &a, const Expression &b) {
 }
 
 
-TEST_CASE("Test simple", "[summation]")
+TEST_CASE("Test simple", "[concrete]")
 {
     using SymEngine::Expression;
     auto i = Expression(dummy());
@@ -64,7 +64,7 @@ TEST_CASE("Test simple", "[summation]")
     REQUIRE(summation(i, i, 0, n) == n * n / 2 + n / 2);
 }
 
-TEST_CASE("Test complex", "[summation]")
+TEST_CASE("Test complex", "[concrete]")
 {
     using namespace SymEngine;
 
